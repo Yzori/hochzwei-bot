@@ -1,0 +1,19 @@
+{
+  "id": "24a77bec-6cb2-f111-aaac-00224812f09c",
+  "referenceNumber": "02696.01.2006",
+  "lastDayOfRental": "16.12.2026 00:00",
+  "hasViewingAppointments": false,
+  "queryViewingAppointments": true,
+  "viewingsFrom": "21.09.2026 00:00",
+  "rentalUnit": {
+    "referenceNumber": null,
+    "plz": "6005",
+    "ort": "Luzern",
+    "strasse": "Zihlmattweg 44",
+    "fullAddress": "Zihlmattweg 44, 6005 Luzern"
+  },
+  "viewingAppointments": [],
+  "hasLinkToTenantInformation": false,
+  "viewingBy": "WINCASA",
+  "viewingState": "NO_APPOINTMENTS_YET"
+}

@@ -1,0 +1,19 @@
+{
+  "id": "9169c519-68b6-ed11-b597-000d3a831ba9",
+  "referenceNumber": "02696.01.2102",
+  "lastDayOfRental": "31.05.2023 00:00",
+  "hasViewingAppointments": false,
+  "queryViewingAppointments": false,
+  "viewingsFrom": "01.10.2026 00:00",
+  "rentalUnit": {
+    "referenceNumber": null,
+    "plz": "6005",
+    "ort": "Luzern",
+    "strasse": "Zihlmattweg 44",
+    "fullAddress": "Zihlmattweg 44, 6005 Luzern"
+  },
+  "viewingAppointments": [],
+  "hasLinkToTenantInformation": false,
+  "viewingBy": "TENANT",
+  "viewingState": "FULLY_BOOKED"
+}
