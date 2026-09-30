@@ -1,0 +1,15 @@
+{
+  "mode": "book",
+  "book_rooms": ["4.5"],
+  "book_above_floor": 10,
+  "poll_seconds": 300,
+  "join_waitlist": true,
+  "contact": {
+    "firstName": "",
+    "lastName": "",
+    "email": "",
+    "phone": "",
+    "language": "de"
+  },
+  "ntfy_topic": ""
+}

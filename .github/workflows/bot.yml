@@ -1,0 +1,48 @@
+name: hochzwei-bot
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: hochzwei-bot
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Run bot
+        env:
+          CONTACT_FIRST_NAME: ${{ secrets.CONTACT_FIRST_NAME }}
+          CONTACT_LAST_NAME: ${{ secrets.CONTACT_LAST_NAME }}
+          CONTACT_EMAIL: ${{ secrets.CONTACT_EMAIL }}
+          CONTACT_PHONE: ${{ secrets.CONTACT_PHONE }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: python bot.py
+
+      - name: Save state
+        if: always()
+        run: |
+          git config user.name "hochzwei-bot"
+          git config user.email "hochzwei-bot@users.noreply.github.com"
+          git add state.json raw/ 2>/dev/null || true
+          if ! git diff --cached --quiet; then
+            git commit -m "Update bot state"
+            git pull --rebase
+            git push
+          fi
