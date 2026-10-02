@@ -7,7 +7,7 @@
     }
   },
   "seen_states": {
-    "02696.01.2006": "NO_APPOINTMENTS_YET",
+    "02696.01.2006": "PROCESS_FINISHED",
     "02696.01.2102": "FULLY_BOOKED",
     "02696.02.1304": "FULLY_BOOKED"
   },
