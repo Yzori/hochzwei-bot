@@ -141,7 +141,14 @@ def appointment_id(appt):
 
 
 def appointment_time(appt):
-    """Best-effort start time for sorting/notification; field name unconfirmed."""
+    """Start time for sorting/notification. Confirmed shape (2026-10-03):
+    {"date": "05.10.2026", "fromTime": "18:00", "toTime": "19:00", ...}"""
+    if appt.get("date") and appt.get("fromTime"):
+        label = f"{appt['date']} {appt['fromTime']}" + (f"-{appt['toTime']}" if appt.get("toTime") else "")
+        try:
+            return datetime.strptime(f"{appt['date']} {appt['fromTime']}", "%d.%m.%Y %H:%M"), label
+        except ValueError:
+            pass
     for key, val in appt.items():
         if isinstance(val, str) and re.match(r"\d{2}\.\d{2}\.\d{4} \d{2}:\d{2}", val):
             if any(k in key.lower() for k in ("start", "from", "von", "date", "datum", "time")):
