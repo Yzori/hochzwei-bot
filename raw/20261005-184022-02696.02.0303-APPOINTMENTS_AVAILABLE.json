@@ -1,0 +1,44 @@
+{
+  "id": "ac8445a8-a730-4c9f-b9b6-7e9390bb1a37",
+  "referenceNumber": "02696.02.0303",
+  "lastDayOfRental": "31.01.2027 00:00",
+  "hasViewingAppointments": true,
+  "queryViewingAppointments": false,
+  "viewingsFrom": "07.10.2026 00:00",
+  "rentalUnit": {
+    "referenceNumber": null,
+    "plz": "6005",
+    "ort": "Luzern",
+    "strasse": "Zihlmattweg 42",
+    "fullAddress": "Zihlmattweg 42, 6005 Luzern"
+  },
+  "viewingAppointments": [
+    {
+      "id": "35b34019-ecc0-f111-aaad-7ced8d43e040",
+      "date": "08.10.2026",
+      "fromTime": "17:00",
+      "toTime": "18:00",
+      "duration": 1,
+      "signUpCount": 0,
+      "highDemand": false,
+      "englishFormattedDate": "10/08/2026",
+      "info": "Max 5 Personen gleichzeitig",
+      "nameplate": "I.Juchler / 3.OG"
+    },
+    {
+      "id": "43b34019-ecc0-f111-aaad-7ced8d43e040",
+      "date": "20.10.2026",
+      "fromTime": "18:00",
+      "toTime": "19:00",
+      "duration": 1,
+      "signUpCount": 0,
+      "highDemand": false,
+      "englishFormattedDate": "10/20/2026",
+      "info": "Max 5 Personen gleichzeitig",
+      "nameplate": "I.Juchler / 3.OG"
+    }
+  ],
+  "hasLinkToTenantInformation": false,
+  "viewingBy": "TENANT",
+  "viewingState": "APPOINTMENTS_AVAILABLE"
+}
