@@ -1,0 +1,19 @@
+{
+  "id": "ac8445a8-a730-4c9f-b9b6-7e9390bb1a37",
+  "referenceNumber": "02696.02.0303",
+  "lastDayOfRental": "31.01.2027 00:00",
+  "hasViewingAppointments": false,
+  "queryViewingAppointments": false,
+  "viewingsFrom": "07.10.2026 00:00",
+  "rentalUnit": {
+    "referenceNumber": null,
+    "plz": "6005",
+    "ort": "Luzern",
+    "strasse": "Zihlmattweg 42",
+    "fullAddress": "Zihlmattweg 42, 6005 Luzern"
+  },
+  "viewingAppointments": [],
+  "hasLinkToTenantInformation": true,
+  "viewingBy": "TENANT",
+  "viewingState": "FULLY_BOOKED"
+}
