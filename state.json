@@ -9,7 +9,8 @@
   "seen_states": {
     "02696.01.2006": "PROCESS_FINISHED",
     "02696.01.2102": "FULLY_BOOKED",
-    "02696.02.1304": "FULLY_BOOKED"
+    "02696.02.1304": "FULLY_BOOKED",
+    "02696.02.0303": "NO_APPOINTMENTS_YET"
   },
   "known_units": {
     "02696.01.2006": "2026-09-30T18:28:32",
