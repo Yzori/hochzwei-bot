@@ -13,7 +13,7 @@ import random
 import re
 import sys
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 
 import requests
@@ -40,6 +40,7 @@ if os.environ.get("NTFY_TOPIC"):
 
 LISTING_URL = "https://hochzwei-luzern.ch/wohnungen/"
 API = "https://api.wincasa.ch/fn-crm-ext-prd-chn/v1/"
+DELISTED_WATCH_DAYS = 14  # keep checking a unit's viewing status this long after it leaves the listing
 HEADERS = {"Content-Type": "application/json", "User-Agent": "Mozilla/5.0"}
 
 _SECRETS = [v for k, v in CONFIG["contact"].items() if k != "language" and v] + [CONFIG.get("ntfy_topic") or ""]
@@ -78,7 +79,7 @@ def load_state():
     return {}
 
 
-STATE_KEYS = ("booked", "waitlisted", "seen_states", "known_units", "notified_slots")
+STATE_KEYS = ("booked", "waitlisted", "seen_states", "known_units", "notified_slots", "unit_info", "delisted")
 
 
 def save_state(state):
@@ -98,12 +99,14 @@ def notify(title, message, priority="default"):
     if not topic:
         return
     try:
-        requests.post(
+        r = requests.post(
             f"https://ntfy.sh/{topic}",
             data=message.encode("utf-8"),
             headers={"Title": title.encode("utf-8"), "Priority": priority},
             timeout=10,
         )
+        if not r.ok:
+            log.warning("ntfy rejected %r: HTTP %s %s", title, r.status_code, r.text[:200])
     except requests.RequestException as e:
         log.warning("ntfy failed: %s", e)
 
@@ -198,21 +201,33 @@ def should_book(u):
     return u["rooms"] in CONFIG["book_rooms"] and floor > CONFIG["book_above_floor"]
 
 
-def handle_unit(u, state, dry_run):
-    unit = u["unit"]
-    label = f"{unit} ({u['rooms']} Zi, {u['floor']}. OG, {u['area']}, {u['rent']})"
-    link = f"https://www.mywincasa.ch/viewing/show/{unit}"
-    v = get_viewing(unit)
-    vstate = v.get("viewingState")
-    appts = v.get("viewingAppointments") or []
+def unit_label(unit, info):
+    if not info:
+        return unit
+    return f"{unit} ({info['rooms']} Zi, {info['floor']}. OG, {info['area']}, {info['rent']})"
 
+
+def check_status(unit, label, v, state):
+    """Record viewingState and notify when it changes."""
+    vstate = v.get("viewingState")
     prev = state["seen_states"].get(unit)
     if prev != vstate:
         log.info("%s viewingState %s -> %s", unit, prev, vstate)
         save_raw(f"{unit}-{vstate}", v)
         state["seen_states"][unit] = vstate
         if prev is not None:
-            notify("Hochzwei: status change", f"{label}: {prev} -> {vstate}. {link}", "high")
+            notify("Hochzwei: status change",
+                   f"{label}: {prev} -> {vstate}. https://www.mywincasa.ch/viewing/show/{unit}", "high")
+
+
+def handle_unit(u, state, dry_run):
+    unit = u["unit"]
+    label = unit_label(unit, u)
+    link = f"https://www.mywincasa.ch/viewing/show/{unit}"
+    v = get_viewing(unit)
+    vstate = v.get("viewingState")
+    appts = v.get("viewingAppointments") or []
+    check_status(unit, label, v, state)
 
     if unit in state["booked"]:
         return
@@ -284,11 +299,49 @@ def run_once(state, dry_run):
         for u in new:
             state["known_units"][u["unit"]] = datetime.now().isoformat(timespec="seconds")
     for u in units:
+        state["unit_info"][u["unit"]] = {k: u[k] for k in ("rooms", "floor", "area", "rent")}
+    track_delistings(units, state)
+    for u in units:
         try:
             handle_unit(u, state, dry_run)
         except requests.RequestException as e:
             log.warning("%s: %s", u["unit"], e)
         save_state(state)
+    check_delisted(state)
+    save_state(state)
+
+
+def track_delistings(units, state):
+    """Notify when a known unit disappears from (or comes back to) the listing."""
+    if not units:
+        log.warning("Listing returned no units; skipping delisting check")
+        return
+    listed = {u["unit"] for u in units}
+    now = datetime.now().isoformat(timespec="seconds")
+    for unit in listed & state["delisted"].keys():
+        del state["delisted"][unit]
+        notify("Hochzwei: apartment back on listing", f"{unit_label(unit, state['unit_info'].get(unit))}. "
+               f"https://www.mywincasa.ch/viewing/show/{unit}", "high")
+    for unit in state["known_units"].keys() - listed - state["delisted"].keys():
+        state["delisted"][unit] = now
+        last = state["seen_states"].get(unit) or "unknown"
+        notify("Hochzwei: apartment removed from listing",
+               f"{unit_label(unit, state['unit_info'].get(unit))} is no longer on {LISTING_URL} "
+               f"(last viewing status: {last}). Probably rented.", "high")
+
+
+def check_delisted(state):
+    """Keep watching viewing status of recently delisted units so the final state is reported."""
+    cutoff = datetime.now() - timedelta(days=DELISTED_WATCH_DAYS)
+    for unit, since in state["delisted"].items():
+        if datetime.fromisoformat(since) < cutoff:
+            continue
+        try:
+            v = get_viewing(unit)
+        except requests.RequestException as e:
+            log.warning("%s (delisted): %s", unit, e)
+            continue
+        check_status(unit, unit_label(unit, state["unit_info"].get(unit)) + " [delisted]", v, state)
 
 
 def main():
