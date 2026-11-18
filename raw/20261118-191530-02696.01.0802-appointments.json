@@ -1,0 +1,44 @@
+{
+  "id": "9e54ad2b-f05f-4eef-8662-28e095ca5f3e",
+  "referenceNumber": "02696.01.0802",
+  "lastDayOfRental": "01.04.2027 00:00",
+  "hasViewingAppointments": true,
+  "queryViewingAppointments": false,
+  "viewingsFrom": "18.11.2026 00:00",
+  "rentalUnit": {
+    "referenceNumber": null,
+    "plz": "6005",
+    "ort": "Luzern",
+    "strasse": "Zihlmattweg 44",
+    "fullAddress": "Zihlmattweg 44, 6005 Luzern"
+  },
+  "viewingAppointments": [
+    {
+      "id": "a59010c8-83e3-f111-84e8-7ced8d43e040",
+      "date": "20.11.2026",
+      "fromTime": "18:00",
+      "toTime": "19:00",
+      "duration": 1,
+      "signUpCount": 0,
+      "highDemand": false,
+      "englishFormattedDate": "11/20/2026",
+      "info": "",
+      "nameplate": "Dimitri Rohner und Luca Vercelli"
+    },
+    {
+      "id": "b19010c8-83e3-f111-84e8-7ced8d43e040",
+      "date": "22.11.2026",
+      "fromTime": "10:00",
+      "toTime": "11:00",
+      "duration": 1,
+      "signUpCount": 0,
+      "highDemand": false,
+      "englishFormattedDate": "11/22/2026",
+      "info": "",
+      "nameplate": "Dimitri Rohner und Luca Vercelli"
+    }
+  ],
+  "hasLinkToTenantInformation": false,
+  "viewingBy": "TENANT",
+  "viewingState": "APPOINTMENTS_AVAILABLE"
+}

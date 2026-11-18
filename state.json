@@ -11,7 +11,7 @@
     "02696.01.2102": "PROCESS_FINISHED",
     "02696.02.1304": "PROCESS_FINISHED",
     "02696.02.0303": "PROCESS_FINISHED",
-    "02696.01.0802": "NO_APPOINTMENTS_YET"
+    "02696.01.0802": "APPOINTMENTS_AVAILABLE"
   },
   "known_units": {
     "02696.01.2006": "2026-09-30T18:28:32",
@@ -23,6 +23,10 @@
   "notified_slots": {
     "02696.02.0303": [
       "43b34019-ecc0-f111-aaad-7ced8d43e040"
+    ],
+    "02696.01.0802": [
+      "a59010c8-83e3-f111-84e8-7ced8d43e040",
+      "b19010c8-83e3-f111-84e8-7ced8d43e040"
     ]
   },
   "unit_info": {
