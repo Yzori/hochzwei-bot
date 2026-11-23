@@ -1,0 +1,32 @@
+{
+  "id": "7669a573-5001-4a82-b74b-58616272882a",
+  "referenceNumber": "02696.02.1401",
+  "lastDayOfRental": "23.02.2027 00:00",
+  "hasViewingAppointments": true,
+  "queryViewingAppointments": false,
+  "viewingsFrom": "25.11.2026 00:00",
+  "rentalUnit": {
+    "referenceNumber": null,
+    "plz": "6005",
+    "ort": "Luzern",
+    "strasse": "Zihlmattweg 42",
+    "fullAddress": "Zihlmattweg 42, 6005 Luzern"
+  },
+  "viewingAppointments": [
+    {
+      "id": "fb506dde-2be7-f111-84ea-6045bd2bdf7a",
+      "date": "30.11.2026",
+      "fromTime": "18:30",
+      "toTime": "19:30",
+      "duration": 1,
+      "signUpCount": 0,
+      "highDemand": false,
+      "englishFormattedDate": "11/30/2026",
+      "info": "",
+      "nameplate": "Martin Michel"
+    }
+  ],
+  "hasLinkToTenantInformation": false,
+  "viewingBy": "TENANT",
+  "viewingState": "APPOINTMENTS_AVAILABLE"
+}
