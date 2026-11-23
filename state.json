@@ -12,7 +12,7 @@
     "02696.02.1304": "PROCESS_FINISHED",
     "02696.02.0303": "PROCESS_FINISHED",
     "02696.01.0802": "APPOINTMENTS_OUTDATED",
-    "02696.02.1401": "NO_APPOINTMENTS_YET"
+    "02696.02.1401": "APPOINTMENTS_AVAILABLE"
   },
   "known_units": {
     "02696.01.2006": "2026-09-30T18:28:32",
@@ -28,6 +28,10 @@
     ],
     "02696.01.0802": [
       "b19010c8-83e3-f111-84e8-7ced8d43e040"
+    ],
+    "02696.02.1401": [
+      "f2506dde-2be7-f111-84ea-6045bd2bdf7a",
+      "fb506dde-2be7-f111-84ea-6045bd2bdf7a"
     ]
   },
   "unit_info": {
